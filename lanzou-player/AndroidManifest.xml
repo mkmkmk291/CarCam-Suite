@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  本清单按 1.0 APK 的反编译结果与源码实际能力复原，用于源码编译参考：
+  - 应用内 java.net.ServerSocket 起 MiniHttpServer 本地端口（需要 INTERNET）
+  - WebView 加载 http://127.0.0.1:<port>（需要 usesCleartextTraffic）
+  - 调用外部播放器/浏览器打开链接（INTERNET、query-all-packages）
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.doubao.lanzouplayer"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="蓝奏云播放器"
+        android:theme="@android:style/Theme.Material.NoActionBar"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize|uiMode|density">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

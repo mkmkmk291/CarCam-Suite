@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>蓝奏云播放器</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2323c3b0'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='%2306201d'%3E蓝%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">蓝</span>
+    <div class="brand-text">
+      <h1>蓝奏云播放器</h1>
+      <p id="accountLine">未登录</p>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="btnRefresh" class="ghost" hidden>刷新</button>
+    <button id="btnLogout" class="ghost" hidden>退出登录</button>
+  </div>
+</header>
+
+<main>
+  <section id="loginView" class="view">
+    <div class="card login-card">
+      <h2>登录蓝奏云</h2>
+      <p class="hint">登录凭证只保存在本机 <code>config/session.json</code>，登录一次后可长期免登录。</p>
+      <label class="field">账号 / 手机号
+        <input id="username" autocomplete="username" placeholder="请输入蓝奏云账号" />
+      </label>
+      <label class="field">密码
+        <input id="password" type="password" autocomplete="current-password" placeholder="请输入密码" />
+      </label>
+      <label class="check"><input type="checkbox" id="remember" checked /> 记住账号</label>
+      <button id="btnLogin" class="primary">登 录</button>
+      <p class="err" id="loginErr"></p>
+    </div>
+  </section>
+
+  <section id="browseView" class="view" hidden>
+    <div class="toolbar">
+      <nav id="crumbs" class="crumbs"></nav>
+      <div class="spacer"></div>
+      <input id="search" class="search" placeholder="在当前目录搜索文件名…" />
+      <span id="count" class="count"></span>
+    </div>
+    <div id="list" class="list"></div>
+    <div class="pager" id="pager"></div>
+  </section>
+
+  <section id="playerView" class="view" hidden>
+    <div class="player-wrap">
+      <div class="stage">
+        <div class="stage-head">
+          <button id="btnBack" class="ghost">← 返回列表</button>
+          <span id="nowTitle" class="now-title"></span>
+        </div>
+        <div class="video-box">
+          <video id="video" controls playsinline preload="metadata"></video>
+          <div id="videoTip" class="video-tip" hidden></div>
+        </div>
+        <div class="stage-bar">
+          <button id="btnPrev" class="chip">上一集</button>
+          <button id="btnNext" class="chip">下一集</button>
+          <select id="speed" class="chip">
+            <option value="0.75">0.75×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option>
+            <option value="2">2×</option>
+          </select>
+          <button id="btnCopy" class="chip">复制播放地址</button>
+          <a id="btnDownload" class="chip download">下载到本地</a>
+        </div>
+        <div class="keys">空格 播放/暂停 · ← → 快退/快进 10 秒 · ↑ ↓ 音量 · F 全屏</div>
+      </div>
+      <aside class="playlist">
+        <h3>当前目录的视频</h3>
+        <ul id="playlist"></ul>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

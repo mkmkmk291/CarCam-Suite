@@ -1,0 +1,80 @@
+<html style="margin:0;padding:0;">
+<title>车机行车记录仪远程查看架构（手机热点版）</title>
+<div style="width:100%;box-sizing:border-box;background:#0f172a;color:#e2e8f0;font-family:system-ui,-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;padding:24px 20px;font-size:15px;line-height:1.6">
+  <h2 style="margin:0 0 4px;font-size:22px;color:#f8fafc">科鲁泽车机 · 行车记录仪远程查看架构（示意）</h2>
+  <p style="margin:0 0 20px;color:#94a3b8;font-size:13px">手机开热点 · 车机连接 · 局域网直连，不消耗流量</p>
+
+  <svg viewBox="0 0 980 340" style="width:100%;max-width:980px;display:block;margin:0 auto;background:#111c33;border-radius:14px" role="img" aria-label="手机热点与车机数据流架构图">
+    <!-- 车机侧 -->
+    <rect x="18" y="22" width="520" height="292" rx="14" fill="#1e293b" stroke="#334155"/>
+    <text x="40" y="52" font-size="15" font-weight="bold" fill="#7dd3fc">🚗 车机端（CarCamServer.apk · 安卓 10）</text>
+
+    <rect x="40" y="70" width="150" height="86" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="115" y="102" text-anchor="middle" font-size="13" fill="#e2e8f0">内置行车记录仪</text>
+    <text x="115" y="122" text-anchor="middle" font-size="11" fill="#94a3b8">车机自带摄像头</text>
+    <text x="115" y="142" text-anchor="middle" font-size="11" fill="#64748b">循环录制</text>
+
+    <rect x="40" y="176" width="150" height="86" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="115" y="208" text-anchor="middle" font-size="13" fill="#e2e8f0">车机内置存储</text>
+    <text x="115" y="228" text-anchor="middle" font-size="11" fill="#94a3b8">录像文件（.mp4 等）</text>
+    <text x="115" y="248" text-anchor="middle" font-size="11" fill="#64748b">App 自动扫描识别目录</text>
+
+    <rect x="250" y="96" width="170" height="110" rx="10" fill="#1d4ed8" stroke="#2563eb"/>
+    <text x="335" y="128" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">录像服务器</text>
+    <text x="335" y="150" text-anchor="middle" font-size="11" fill="#bfdbfe">HTTP :8080</text>
+    <text x="335" y="168" text-anchor="middle" font-size="11" fill="#bfdbfe">目录浏览 · 缩略图</text>
+    <text x="335" y="186" text-anchor="middle" font-size="11" fill="#bfdbfe">视频流 + Range 拖动</text>
+
+    <rect x="440" y="120" width="84" height="60" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="482" y="148" text-anchor="middle" font-size="13" fill="#e2e8f0">Wi-Fi</text>
+    <text x="482" y="168" text-anchor="middle" font-size="10" fill="#64748b">客户端（STA）<br/>连接手机热点</text>
+
+    <!-- 车机侧箭头 -->
+    <line x1="190" y1="130" x2="248" y2="145" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+    <line x1="190" y1="220" x2="248" y2="190" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+    <line x1="420" y1="151" x2="438" y2="151" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+
+    <!-- 中段连接 -->
+    <line x1="524" y1="152" x2="584" y2="152" stroke="#34d399" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#ar2)"/>
+    <text x="556" y="138" text-anchor="middle" font-size="10" fill="#34d399">手机热点 Wi-Fi</text>
+
+    <!-- 手机侧 -->
+    <rect x="586" y="22" width="376" height="292" rx="14" fill="#1e293b" stroke="#334155"/>
+    <text x="606" y="52" font-size="15" font-weight="bold" fill="#7dd3fc">📱 手机端（CarCamViewer.apk / 浏览器）</text>
+
+    <rect x="606" y="70" width="160" height="60" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="686" y="94" text-anchor="middle" font-size="13" fill="#e2e8f0">热点 AP</text>
+    <text x="686" y="112" text-anchor="middle" font-size="11" fill="#64748b">开启个人热点</text>
+    <text x="686" y="126" text-anchor="middle" font-size="11" fill="#64748b">车机连接后组网</text>
+
+    <rect x="606" y="150" width="160" height="86" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="686" y="182" text-anchor="middle" font-size="13" fill="#e2e8f0">录像查看器 App</text>
+    <text x="686" y="202" text-anchor="middle" font-size="11" fill="#94a3b8">自动扫描车机 IP</text>
+    <text x="686" y="222" text-anchor="middle" font-size="11" fill="#94a3b8">目录列表 · 缩略图</text>
+
+    <rect x="792" y="150" width="150" height="86" rx="10" fill="#0f172a" stroke="#475569"/>
+    <text x="867" y="182" text-anchor="middle" font-size="13" fill="#e2e8f0">在线播放 / 下载 / 浏览器</text>
+    <text x="867" y="202" text-anchor="middle" font-size="11" fill="#94a3b8">http 流式 · 支持拖动</text>
+    <text x="867" y="222" text-anchor="middle" font-size="11" fill="#94a3b8">浏览器访问车机 IP:8080</text>
+
+    <!-- 手机侧箭头 -->
+    <line x1="768" y1="150" x2="790" y2="180" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+    <line x1="768" y1="200" x2="790" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+
+    <defs>
+      <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+      <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#34d399"/></marker>
+    </defs>
+  </svg>
+
+  <h3 style="font-size:16px;margin:26px 0 10px;color:#f8fafc">使用流程</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:10px">
+    <div style="flex:1 1 150px;min-width:150px;background:#1e293b;border-radius:10px;padding:12px"><b style="color:#fbbf24">1</b> 手机开启个人热点</div>
+    <div style="flex:1 1 150px;min-width:150px;background:#1e293b;border-radius:10px;padding:12px"><b style="color:#fbbf24">2</b> 车机连接手机热点，安装并启动 CarCamServer</div>
+    <div style="flex:1 1 150px;min-width:150px;background:#1e293b;border-radius:10px;padding:12px"><b style="color:#fbbf24">3</b> 手机打开 CarCamViewer → 自动扫描</div>
+    <div style="flex:1 1 150px;min-width:150px;background:#1e293b;border-radius:10px;padding:12px"><b style="color:#fbbf24">4</b> 浏览录像 → 在线播放 / 下载</div>
+  </div>
+
+  <p style="margin:18px 0 0;color:#64748b;font-size:12px">图示为方案示意，非官方结构。依赖：车机为安卓且允许安装第三方 APK；手机热点保持开启。详见 README.md。</p>
+</div>
+</html>

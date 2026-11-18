@@ -1,0 +1,18 @@
+# 构建/编译产物
+build/
+dist/
+*.class
+*.dex
+*.idsig
+
+# 签名与密钥（debug.keystore 除外，它属于调试用公开密钥）
+*.jks
+*.keystore.tmp
+!tools/debug.keystore
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.iml
+.idea/
+.vscode/

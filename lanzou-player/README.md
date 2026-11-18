@@ -1,8 +1,12 @@
 # 蓝奏云播放器 · Lanzou Player
 
-把蓝奏云分享链接变成**可直接播放的局域网网页播放器**：App 在本地起一个 `MiniHttpServer`，
-WebView 加载内嵌网页 UI，网页侧的网盘请求由原生 `LanzouClient` 代发（绕过跨域与 Cookie 限制），
-从而在车机/手机上得到接近原生播放器的体验。
+**用来直接看蓝奏云里的视频**：登录蓝奏云账号后浏览云端文件夹，点视频即可在线播放，不用先下载到本地。
+配合车机端 `CarCamServer` 的「蓝奏云自动备份」，形成
+**车机自动上传录像 → 手机随时云端回看** 的闭环。
+
+实现方式：App 在本地起一个 `MiniHttpServer`，WebView 加载内嵌网页 UI，网页侧的网盘请求由原生
+`LanzouClient` 代发（绕过跨域与 Cookie 限制），视频流再由本地服务代理输出，从而在车机/手机上
+得到接近原生播放器的体验。
 
 ## 源码结构
 
@@ -47,9 +51,15 @@ d8 --lib $SDK/platforms/android-34/android.jar --release --output build/dexout $
 
 ## 功能
 
-- 蓝奏云分享链接直接播放（原生代发请求，规避跨域与 UA 限制）
-- 全屏播放、倍速、外部播放器接管
-- 账号凭据用 Android Keystore（AES-GCM）加密存储
+- **登录蓝奏云账号**（`POST /api/login`，Cookie 由原生侧维护），进入后直接浏览**云端文件夹**
+  （`GET /api/browse?folder_id=…&page=…`，支持分页）
+- **云端在线播放**：`GET /api/stream/<file_id>?ext=…` 由本地服务代理转发，拖动进度不必整段先下载
+- **云端下载**：`GET /api/download/<file_id>`，可交给系统浏览器/下载器续传
+- 全屏播放、倍速、外部播放器接管（`ACTION_VIEW` 把直链交给 MX Player 等）
+- 账号凭据用 Android Keystore（AES-GCM）加密存储；`/api/logout` 可退出
+
+> 与车机端配合：`CarCamServer` 把新录像自动上传到蓝奏云同名账号的「记录仪」文件夹，
+> 本播放器登录同一账号即可看到这些视频。
 
 ## 免责声明
 
